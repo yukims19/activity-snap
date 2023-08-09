@@ -1,46 +1,29 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import "./App.css";
+import Grid from "@mui/material/Grid";
+import styled from "@emotion/styled";
+import { ImageUploader } from "./components/ImageUploader";
+import { ChatBox } from "./components/ChatBox";
+import { EssayBox } from "./components/EssayBox";
+
+const Wrapper = styled.div`
+  padding: 32px;
+`;
 
 function App() {
-  const [message, setMessage] = useState("");
-  const [images, setImages] = useState<FileList | null>(null);
-
-  function changeHandler(e: ChangeEvent) {
-    const target = e.target as HTMLInputElement;
-    setImages(target.files);
-  }
-
-  async function handleSubmission() {
-    const formData = new FormData();
-    if (!images) {
-      setMessage("No images uploaded");
-      return;
-    }
-
-    for (let i = 0; i < images.length; ++i) {
-      formData.append("images", images[i], images[i].name);
-    }
-    const res = await fetch("http://localhost:7400/process-image", {
-      method: "POST",
-      body: formData,
-    });
-
-    const data = await res.json();
-    setMessage(JSON.stringify(data));
-    //TODO: store data in localstorage
-  }
-
   return (
-    <div className="App">
-      <div>
-        <div>Message: {message}</div>
-      </div>
+    <Wrapper>
+      <Grid container spacing={6}>
+        <Grid item xs={8}>
+          <ImageUploader />
+        </Grid>
+        <Grid item xs={4}>
+          <ChatBox />
+        </Grid>
 
-      <input type="file" name="file" onChange={changeHandler} multiple />
-      <div>
-        <button onClick={handleSubmission}>Submit</button>
-      </div>
-    </div>
+        <Grid item xs={12}>
+          <EssayBox />
+        </Grid>
+      </Grid>
+    </Wrapper>
   );
 }
 

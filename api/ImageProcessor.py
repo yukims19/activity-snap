@@ -9,9 +9,8 @@ class ImageProcessor(Resource):
     def post(self):   
         try:     
             images = request.files.getlist('images')
-            metadata = get_image_metadata(images)
-            final_ret = {"status": "Success", "metadata": metadata}
-            return final_ret
+            metadata = get_image_metadata(images)            
+            return metadata
         except Exception as error:
             return jsonify({'error': error})
 

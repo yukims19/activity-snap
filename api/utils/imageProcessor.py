@@ -34,10 +34,10 @@ def get_decimal_coordinates(info):
 #known_encodings, names
 def get_image_metadata(images, ):
     print('>>>>>>>>Get Image Metadata...')
-    results = []
+    results = {}
     for idx, i in enumerate(images):
         print('')
-        print('>>>>>>Image No.', idx+1, '<<<<<<', i)
+        print('>>>>>>Image No.', idx+1, '<<<<<<', i.filename)
         image = Image.open(i)
         exif = image.getexif()
         datetime = exif[306]
@@ -57,6 +57,6 @@ def get_image_metadata(images, ):
         matched_names = get_face_names(i)
         print('>>>The face names are: ', matched_names) 
 
-        results.append(
-            {"datetime": datetime, "location": location.address, "caption":     caption, "people": matched_names})
+        results[i.filename] = {"datetime": datetime, "location": location.address, "caption": caption, "people": matched_names}
+        
     return results
