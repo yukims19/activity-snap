@@ -52,15 +52,34 @@ export function ChatBox() {
     }
   }
 
-  function sendMessage() {
+  async function sendMessage() {
     if (userInput.length === 0) {
       return;
     }
+
     const newMessage = messages.slice();
     newMessage.push({ source: "user", message: userInput });
     setUserInput("");
     setMessages(newMessage);
+
+    const storageVal = localStorage.getItem("image-metadata") || "";
+    const metadata = Object.values(JSON.parse(storageVal));
+
+    const res = await fetch("http://localhost:7400/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: userInput, metadata: metadata }),
+    });
+
+    const message = await res.json();
+    const newMessage2 = newMessage.slice();
+
+    newMessage2.push({ source: "system", message: message });
+    setMessages(newMessage2);
   }
+
   return (
     <Paper
       elevation={2}

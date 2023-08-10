@@ -1,4 +1,5 @@
 from flask import Flask, send_from_directory
+from api.Chat import Chat
 from api.ImageProcessor import ImageProcessor
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS  # comment this on deployment
@@ -14,3 +15,4 @@ def serve(path):
 
 
 api.add_resource(ImageProcessor, '/process-image')
+api.add_resource(Chat, '/chat')
