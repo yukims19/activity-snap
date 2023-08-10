@@ -12,13 +12,12 @@ function App() {
   return (
     <Wrapper>
       <Grid container spacing={6}>
-        <Grid item xs={8}>
+        <Grid item xs={12} md={8}>
           <ImageUploader />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <ChatBox />
         </Grid>
-
         <Grid item xs={12}>
           <EssayBox />
         </Grid>

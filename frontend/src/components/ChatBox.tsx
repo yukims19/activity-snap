@@ -38,8 +38,11 @@ export function ChatBox() {
   const messagesRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    messagesRef.current?.scrollIntoView({ behavior: "smooth" });
-    console.log(messagesRef.current);
+    messagesRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "start",
+    });
   }, [messages]);
 
   function updateUserInput(e: ChangeEvent<HTMLInputElement>) {
