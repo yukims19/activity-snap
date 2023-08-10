@@ -13,8 +13,19 @@ const EssayWrapper = styled.div`
 export function EssayBox() {
   const [essay, setEssay] = useState("");
 
-  function handleSubmission() {
-    setEssay("summary of the day");
+  async function handleSubmission() {
+    const storageVal = localStorage.getItem("image-metadata") || "";
+    const metadata = Object.values(JSON.parse(storageVal));
+    const res = await fetch("http://localhost:7400/summarize", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ metadata: metadata }),
+    });
+
+    const message = await res.json();
+    setEssay(message);
   }
   return (
     <Paper
