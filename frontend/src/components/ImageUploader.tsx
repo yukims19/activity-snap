@@ -113,46 +113,48 @@ export function ImageUploader() {
         padding: "24px",
       }}
     >
-      <Button variant="outlined" component="label" color="secondary">
-        Upload File
-        <input
-          type="file"
-          name="file"
-          onChange={changeHandler}
-          multiple
-          hidden
-        />
-      </Button>
+      <div style={{ height: "400px" }}>
+        <Button variant="outlined" component="label" color="secondary">
+          Upload File
+          <input
+            type="file"
+            name="file"
+            onChange={changeHandler}
+            multiple
+            hidden
+          />
+        </Button>
 
-      <div
-        style={{
-          overflow: "scroll",
-          maxHeight: "500px",
-          margin: "24px",
-          position: "relative",
-        }}
-      >
-        <ImageList cols={4}>
-          {imageUrls.map((url) => (
-            <ImageListItem key={url.name}>
-              <img src={url.url} alt="" loading="lazy" />
-              <ImageBar>
-                <pre style={{ margin: 0 }}>
-                  {JSON.stringify(imageMetadata[url.name], null, 2)}
-                </pre>
-              </ImageBar>
-            </ImageListItem>
-          ))}
-        </ImageList>
-        {isLoading && (
-          <LoadingWrap>
-            <CircularProgress />
-          </LoadingWrap>
-        )}
+        <div
+          style={{
+            overflow: "scroll",
+            margin: "24px",
+            position: "relative",
+            height: "calc(100% - 120px)",
+          }}
+        >
+          <ImageList cols={4}>
+            {imageUrls.map((url) => (
+              <ImageListItem key={url.name}>
+                <img src={url.url} alt="" loading="lazy" />
+                <ImageBar>
+                  <pre style={{ margin: 0 }}>
+                    {JSON.stringify(imageMetadata[url.name], null, 2)}
+                  </pre>
+                </ImageBar>
+              </ImageListItem>
+            ))}
+          </ImageList>
+          {isLoading && (
+            <LoadingWrap>
+              <CircularProgress />
+            </LoadingWrap>
+          )}
+        </div>
+        <Button variant="contained" onClick={handleSubmission} fullWidth>
+          Submit
+        </Button>
       </div>
-      <Button variant="contained" onClick={handleSubmission} fullWidth>
-        Submit
-      </Button>
     </Paper>
   );
 }
